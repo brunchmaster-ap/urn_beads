@@ -2,5 +2,14 @@
 title: "Proportion of red beads"
 format: html
 author: Ansh Patel
+execute: 
+  echo: false
 ---
 
+
+```{r}
+#| message: false
+library(tidyverse)
+```
+
+Data science often involves looking at categorical outcomes, like colors, along with continuous or discrete variables such as size to understand patterns in data. This analysis uses a dataset of 1,000 beads gathered from a controlled urn experiment to explore how bead size connects to color distribution.
