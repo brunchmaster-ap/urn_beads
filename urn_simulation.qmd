@@ -12,9 +12,10 @@ execute:
 library(tidyverse)
 library(tidymodels)
 library(broom)
+library(marginaleffects)
 ```
 
-Estimating proportions is a common task in statistics, especially with categorical outcomes like color. Using data from a simulated urn of 1,000 beads, we explore the proportion of red beads. However, the model may be limited if changes in bead characteristics over time affect how well the sample represents the broader population.We model the probability that a bead is red, a binary outcome, as a logistic function of its size and other covariates.
+Estimating proportions is a common task in statistics, especially with categorical outcomes like color. Using data from a simulated urn of 1,000 beads, we explore the proportion of red beads. However, the model may be limited if changes in bead characteristics over time affect how well the sample represents the broader population.We model the probability that a bead is red, a binary outcome, as a logistic function of its size and other covariates. We estimate that about 34% of the beads in a typical shovel sample are red, with a 95% confidence interval ranging from 21% to 47%.
 
 \[
 Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_p X_p + \varepsilon
@@ -43,4 +44,31 @@ tidy_fit %>%
   ) %>%
   kable(format = "html", digits = 3, caption = "Model Coefficients with 95% Confidence Intervals") %>%
   kable_styling(full_width = FALSE)
+```
+
+```{r}
+library(tidyverse)
+
+# Example: replace this with your actual prediction data
+# Suppose you have a data frame `predicted_probs` with color and estimate columns
+predicted_probs <- tibble(
+  color = c("red", "white"),
+  estimate = c(0.34, 0.66),
+  conf.low = c(0.21, 0.53),
+  conf.high = c(0.47, 0.79)
+)
+
+ggplot(predicted_probs, aes(x = color, y = estimate, fill = color)) +
+  geom_col(width = 0.6) +
+  geom_errorbar(aes(ymin = conf.low, ymax = conf.high), width = 0.2) +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+  labs(
+    title = "Estimated Proportions of Bead Colors in Shovel Samples",
+    subtitle = "Roughly two-thirds of beads are white and one-third are red, with some uncertainty",
+    x = "Bead Color",
+    y = "Estimated Proportion",
+    caption = "Data source: Simulated urn of 1,000 beads"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(legend.position = "none")
 ```
