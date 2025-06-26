@@ -12,4 +12,4 @@ execute:
 library(tidyverse)
 ```
 
-Data science often involves looking at categorical outcomes, like colors, along with continuous or discrete variables such as size to understand patterns in data. This analysis uses a dataset of 1,000 beads gathered from a controlled urn experiment to explore how bead size connects to color distribution.
+Estimating proportions is a common task in statistics, especially with categorical outcomes like color. Using data from a simulated urn of 1,000 beads, we explore the proportion of red beads. However, the model may be limited if changes in bead characteristics over time affect how well the sample represents the broader population.
