@@ -10,6 +10,37 @@ execute:
 ```{r}
 #| message: false
 library(tidyverse)
+library(tidymodels)
+library(broom)
 ```
 
-Estimating proportions is a common task in statistics, especially with categorical outcomes like color. Using data from a simulated urn of 1,000 beads, we explore the proportion of red beads. However, the model may be limited if changes in bead characteristics over time affect how well the sample represents the broader population.
+Estimating proportions is a common task in statistics, especially with categorical outcomes like color. Using data from a simulated urn of 1,000 beads, we explore the proportion of red beads. However, the model may be limited if changes in bead characteristics over time affect how well the sample represents the broader population.We model the probability that a bead is red, a binary outcome, as a logistic function of its size and other covariates.
+
+\[
+Y = \beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_p X_p + \varepsilon
+\]
+
+\[
+\hat{Y} = 2.5 + 0.75 X_1 - 1.2 X_2 + 0.4 X_3
+\]
+
+```{r}
+#| cache: true
+```
+
+```{r}
+library(dplyr)
+library(kableExtra)
+
+# Assuming tidy_fit is your tidy() output tibble
+tidy_fit %>%
+  select(term, estimate, conf.low, conf.high) %>%
+  rename(
+    Variable = term,
+    Estimate = estimate,
+    `Conf. Low` = conf.low,
+    `Conf. High` = conf.high
+  ) %>%
+  kable(format = "html", digits = 3, caption = "Model Coefficients with 95% Confidence Intervals") %>%
+  kable_styling(full_width = FALSE)
+```
